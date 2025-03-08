@@ -21,11 +21,11 @@ contract DAONft is ERC721, Ownable {
     }
 
     function claimNFT(string memory tokenURI) external {
-        if(daoToken.balanceOf(msg.sender) <= 0) {
+        if (daoToken.balanceOf(msg.sender) <= 0) {
             revert DAONft__DAONftDoesNotOwnDAOToken();
         }
 
-        if(hasClaimed[msg.sender]) {
+        if (hasClaimed[msg.sender]) {
             revert DAONft__DAONftAlreadyClaimedNFT();
         }
 
@@ -38,7 +38,7 @@ contract DAONft is ERC721, Ownable {
         hasClaimed[msg.sender] = true;
     }
 
-    function getDidUserClaimNFT(address user) public view returns(bool success) {
+    function getDidUserClaimNFT(address user) public view returns (bool success) {
         bool userClaimed = hasClaimed[user];
 
         return userClaimed;

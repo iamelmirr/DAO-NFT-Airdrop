@@ -10,8 +10,8 @@ contract DAOTokenTest is Test {
     TokenDeploy public deployer;
     DAOToken public daoToken;
     address owner = address(this);
-    address user1 = makeAddr('user1');
-    address user2 = makeAddr('user2');
+    address user1 = makeAddr("user1");
+    address user2 = makeAddr("user2");
 
     function setUp() public {
         daoToken = new DAOToken();
@@ -35,6 +35,5 @@ contract DAOTokenTest is Test {
         vm.expectRevert();
 
         daoToken.mint(user2, 1000 * 10 ** 18);
-
     }
 }

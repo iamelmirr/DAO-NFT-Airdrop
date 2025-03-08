@@ -13,7 +13,7 @@ contract DAOToken is ERC20, Ownable {
     }
 
     function mint(address to, uint256 amount) external onlyOwner {
-        if(msg.sender != owner()) {
+        if (msg.sender != owner()) {
             revert DAOToken__DAOTokenOnlyOwnerCanMintTokens();
         }
         _mint(to, amount);

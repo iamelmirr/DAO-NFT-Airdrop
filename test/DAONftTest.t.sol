@@ -9,7 +9,7 @@ import {DAONft} from "../src/DAONft.sol";
 contract DAONftTest is Test {
     DAOToken daoToken;
     DAONft daoNft;
-    address user = makeAddr('user');
+    address user = makeAddr("user");
 
     function setUp() public {
         daoToken = new DAOToken();

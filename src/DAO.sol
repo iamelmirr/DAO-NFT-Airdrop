@@ -93,8 +93,8 @@ contract DAO {
         return proposalExecuted;
     }
 
-    modifier onlyOwner {
-        if(msg.sender != owner) {
+    modifier onlyOwner() {
+        if (msg.sender != owner) {
             revert DAO__DAOMustBeOwner();
         }
         _;
