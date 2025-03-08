@@ -12,7 +12,7 @@ contract DeployDAO is Script {
         vm.startBroadcast();
 
         DAOToken daoToken = new DAOToken();
-        DAONft daoNft = new DAONft();
+        DAONft daoNft = new DAONft(address(daoToken));
         DAO dao = new DAO(address(daoToken), address(daoNft));
 
         daoToken.transferOwnership(address(dao));

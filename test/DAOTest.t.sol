@@ -17,7 +17,7 @@ contract DAOTest is Test {
 
     function setUp() public {
         daoToken = new DAOToken();
-        daoNft = new DAONft();
+        daoNft = new DAONft(address(daoToken));
         dao = new DAO(address(daoToken), address(daoNft));
 
         daoToken.transferOwnership(address(dao));
@@ -47,5 +47,20 @@ contract DAOTest is Test {
         uint256 proposalVotes = dao.getProposalVotes(0);
 
         assertEq(proposalVotes, 1000 * 10 ** 18);
+    }
+
+    function testExecuteProposal() public {
+        vm.startPrank(address(dao));
+        daoToken.mint(user1, 10000 * 10 ** 18);
+        vm.stopPrank();
+
+        vm.startPrank(user1);
+        dao.createProposal("Upgrade UI");
+        dao.vote(0);
+        vm.stopPrank();
+
+        dao.executeProposal(0);
+        bool proposalExecuted = dao.getProposalExecuted(0);
+        assertEq(proposalExecuted, true);
     }
 }

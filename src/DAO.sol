@@ -10,6 +10,7 @@ contract DAO {
     error DAO__DAOInvalidProposalId();
     error DAO__DAOAlreadyVoted();
     error DAO__DAOVotingAlreadyExecuted();
+    error DAO__DAOMustBeOwner();
 
     struct Proposal {
         string description;
@@ -59,8 +60,8 @@ contract DAO {
         emit Voted(proposalId, msg.sender);
     }
 
-    function executeProposal(uint256 proposalId) external onlyTokenHolder {
-        if (proposalId < proposals.length) {
+    function executeProposal(uint256 proposalId) public onlyOwner {
+        if (proposalId >= proposals.length) {
             revert DAO__DAOInvalidProposalId();
         }
 
@@ -84,5 +85,18 @@ contract DAO {
         Proposal memory proposal = proposals[index];
         uint256 proposalVotes = proposal.votes;
         return proposalVotes;
+    }
+
+    function getProposalExecuted(uint256 index) external view returns (bool executed) {
+        Proposal memory proposal = proposals[index];
+        bool proposalExecuted = proposal.executed;
+        return proposalExecuted;
+    }
+
+    modifier onlyOwner {
+        if(msg.sender != owner) {
+            revert DAO__DAOMustBeOwner();
+        }
+        _;
     }
 }
